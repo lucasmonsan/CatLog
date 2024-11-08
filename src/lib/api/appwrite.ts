@@ -1,4 +1,4 @@
-import { Account, Client, Databases, ID, Query } from "appwrite";
+import { Account, Client, Databases } from "appwrite";
 
 const hostname = import.meta.env.HOSTNAME;
 const endpoint = import.meta.env.APPWRITE_ENDPOINT;
