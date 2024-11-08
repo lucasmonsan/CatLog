@@ -10,6 +10,32 @@
 		<link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet" />
 
 		<style>
+			:root {
+				--slow: 0.5s ease-in-out;
+				--fast: 0.25s ease-in-out;
+
+				--shadow-1: rgba(46, 46, 51, 0.25) 0px 0.5rem 1.5rem 0px;
+				--shadow-2: rgba(21, 21, 22, 0.25) 0px 0.5rem 1.5rem 0px;
+
+				--radius-1: 1rem;
+				--radius-2: 2rem;
+
+				--primary: #eb5064;
+				--secondary: #eb506540;
+				--white: #fdfdfd;
+				--black: #101010;
+
+				--bg: #fdfdfd;
+				--text: #101010;
+				--subtext: rgba(0, 0, 0, 0.4);
+				--border: rgba(0, 0, 0, 0.1);
+			}
+			:root.dark {
+				--bg: #101010;
+				--text: #fdfdfd;
+				--subtext: rgba(255, 255, 255, 0.25);
+				--border: rgba(255, 255, 255, 0.05);
+			}
 			*,
 			*::before,
 			*::after {
@@ -19,23 +45,33 @@
 			}
 			html {
 				scroll-behavior: smooth;
+				font-size: clamp(0.95rem, 1vw + 0.5rem, 2rem);
+				text-rendering: optimizeLegibility;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
 			}
 			html > div {
 				display: none;
 			}
 			body {
 				overflow: hidden;
-				width: 100%;
-				height: clamp(100dvh, 100vh, 100vh);
-				font-synthesis: none;
-				text-rendering: optimizeLegibility;
-				-webkit-font-smoothing: antialiased;
-				-moz-osx-font-smoothing: grayscale;
-				color: var(--color-text);
-				background-color: var(--color-bg);
+				height: 100dvh;
+				color: var(--text);
+				background-color: var(--bg);
 				transition:
 					color var(--slow),
 					background-color var(--slow);
+			}
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+				font-family: 'Rubik', serif;
+			}
+			p {
+				font-family: 'Dosis', sans-serif;
 			}
 		</style>
 
