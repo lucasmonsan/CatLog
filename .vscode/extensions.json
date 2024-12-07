@@ -1,0 +1,29 @@
+{
+	"recommendations": [
+		"formulahendry.auto-close-tag",
+		"formulahendry.auto-complete-tag",
+		"steoates.autoimport",
+		"formulahendry.auto-rename-tag",
+		"eliutdev.bulma-css-class-completion",
+		"sourcegraph.cody-ai",
+		"naumovs.color-highlight",
+		"phoenisx.cssvar",
+		"dbaeumer.vscode-eslint",
+		"azat-io.eyecons",
+		"jdinhlife.gruvbox",
+		"ecmel.vscode-html-css",
+		"wix.vscode-import-cost",
+		"oderwat.indent-rainbow",
+		"ritwickdey.liveserver",
+		"anweber.local-sync",
+		"yutengjing.package-manager-enhancer",
+		"esbenp.prettier-vscode",
+		"yoavbls.pretty-ts-errors",
+		"tomi.xasnippets",
+		"shan.code-settings-sync",
+		"pivaszbs.svelte-autoimport",
+		"svelte.svelte-vscode",
+		"styled-components.vscode-styled-components",
+		"vue.volar"
+	]
+}
