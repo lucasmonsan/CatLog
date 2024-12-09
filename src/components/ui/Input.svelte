@@ -56,7 +56,8 @@
 		justify-content: center;
 		width: 100%;
 		padding: calc(var(--base) * 0.125) 0 0 0;
-		font-size: calc(var(--base) * 1);
+		font-size: calc(var(--base) * 1.25);
+		font-family: var(--family-1);
 		color: var(--text-color);
 		background-color: transparent;
 		border: none;
