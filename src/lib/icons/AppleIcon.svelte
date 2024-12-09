@@ -11,9 +11,3 @@
 		</g>
 	</g>
 </svg>
-
-<style>
-	svg {
-		height: 100%;
-	}
-</style>

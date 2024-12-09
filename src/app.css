@@ -111,18 +111,30 @@ ul {
 }
 
 li {
-	cursor: pointer;
-	padding: calc(var(--base) * 0.25);
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	text-align: center;
 	font-weight: 500;
 	opacity: 0.5;
 	border: solid 1px transparent;
 	transition: border var(--fast);
 
-	&.bold {
-		font-weight: bold;
+	&.today {
 		opacity: 1;
+		border-color: var(--text-color);
+		border-radius: var(--radius-1);
+		background-color: var(--text-color);
+
+		button {
+			font-weight: bold;
+			color: var(--bg-color);
+		}
 	}
+}
+
+svg {
+	height: 100%;
 }
 
 /****************************/
