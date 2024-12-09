@@ -6,7 +6,7 @@
 	import { onMount } from 'svelte'
 
 	let visible = false
-	let option: 'days' | 'months' | 'years' | '' = 'months'
+	let option: 'days' | 'months' | 'years' | '' = ''
 	const days = [...Array(new Date($pickYear, $pickMonth, 1).getDay()).fill(null), ...Array.from({ length: new Date($pickYear, $pickMonth + 1, 0).getDate() }, (_, i) => i + 1)]
 	const dayNames = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
 	const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']

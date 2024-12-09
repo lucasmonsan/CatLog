@@ -156,6 +156,10 @@ svg {
 	transition: max-height var(--fast);
 }
 
+.nowrap {
+	text-wrap: nowrap;
+}
+
 .column {
 	flex-direction: column;
 }
