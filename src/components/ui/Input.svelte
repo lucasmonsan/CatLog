@@ -4,28 +4,32 @@
 	import ProfileIcon from '$lib/icons/ProfileIcon.svelte'
 
 	export let id: string
-	export let type: 'text' | 'email' | 'number' | 'password' | 'profile' = 'text'
+	export let type: 'text' | 'email' | 'number' | 'password' | 'profile' | 'time' | 'date' = 'text'
 	export let value: string = ''
-	export let placeholder: string
+	export let placeholder: string = ''
+	export let align: 'left' | 'right' | 'center' = 'left'
 </script>
 
 <label for={id} class={value !== '' ? 'using' : ''}>
-	<div>
-		{#if type === 'email'}
-			<EmailIcon />
-		{:else if type === 'password'}
-			<PasswordIcon />
-		{:else if type === 'profile'}
-			<ProfileIcon />
-		{/if}
-	</div>
-	<input type={type === 'profile' ? 'text' : type} {id} {placeholder} bind:value />
+	{#if type !== 'text' && type !== 'number' && type !== 'time' && type !== 'date'}
+		<div>
+			{#if type === 'email'}
+				<EmailIcon />
+			{:else if type === 'password'}
+				<PasswordIcon />
+			{:else if type === 'profile'}
+				<ProfileIcon />
+			{/if}
+		</div>
+	{/if}
+	<input type={type === 'profile' ? 'text' : type} {id} {placeholder} bind:value style="text-align: {align};" />
 </label>
 
 <style>
 	label {
 		cursor: pointer;
 		display: flex;
+		align-items: center;
 		gap: calc(var(--base) * 0.25);
 		width: 100%;
 		padding: calc(var(--base) * 0.25) 0;
@@ -47,10 +51,24 @@
 	input {
 		overflow: visible;
 		outline: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
 		padding: calc(var(--base) * 0.125) 0 0 0;
 		font-size: calc(var(--base) * 1);
 		color: var(--text-color);
 		background-color: transparent;
 		border: none;
+		appearance: none;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		background: none;
+	}
+	input::-webkit-date-and-time-value {
+		appearance: none;
+		margin: 0;
+		width: 100%;
+		text-align: center;
 	}
 </style>

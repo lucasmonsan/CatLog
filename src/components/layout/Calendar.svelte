@@ -113,15 +113,6 @@
 <style>
 	section {
 		justify-content: flex-start;
-		max-height: calc(var(--base) * 3.125);
-
-		&.days {
-			max-height: calc(var(--base) * 15.5);
-		}
-		&.months,
-		&.years {
-			max-height: calc(var(--base) * 12);
-		}
 	}
 
 	div {
@@ -147,6 +138,7 @@
 	ul.months {
 		grid-template-columns: repeat(3, 1fr);
 		padding-top: calc(var(--base) * 0.125);
+		padding-right: calc(var(--base) * 0.125);
 
 		li {
 			height: calc(var(--base) * 1.875);

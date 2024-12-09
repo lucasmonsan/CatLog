@@ -7,7 +7,6 @@
 	import ForgotPassword from '../forms/ForgotPassword.svelte'
 	import { logged } from '$lib/stores/user'
 	import { onMount } from 'svelte'
-
 	let visible = false
 	let option: 'login' | 'signup' | 'forgot' | '' = ''
 

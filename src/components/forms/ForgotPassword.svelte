@@ -15,6 +15,5 @@
 	form {
 		flex-direction: column;
 		gap: calc(var(--base) * 0.75);
-		max-height: calc(var(--base) * 7.25);
 	}
 </style>
