@@ -1,0 +1,64 @@
+{
+	"git.openRepositoryInParentFolders": "always",
+	"window.commandCenter": false,
+	"workbench.layoutControl.enabled": false,
+	"workbench.settings.applyToAllProfiles": [
+		"sync.forceUpload",
+		"sync.autoUpload",
+		"editor.fontFamily",
+		"editor.tabSize",
+		"editor.fontSize",
+		"editor.defaultFormatter",
+		"editor.formatOnSave"
+	],
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+
+	"notebook.defaultFormatter": "esbenp.prettier-vscode",
+	"notebook.formatOnSave.enabled": true,
+	"explorer.confirmDelete": false,
+	"explorer.confirmDragAndDrop": false,
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"workbench.activityBar.location": "top",
+	"editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
+	"editor.tabSize": 2,
+	"editor.fontSize": 12,
+	"prettier.printWidth": 120,
+	"editor.linkedEditing": true,
+	"javascript.updateImportsOnFileMove.enabled": "always",
+
+	"editor.lineHeight": 1.8,
+	"editor.minimap.enabled": false,
+	"workbench.startupEditor": "newUntitledFile",
+	"editor.fontLigatures": true,
+	"workbench.editor.labelFormat": "short",
+	"explorer.compactFolders": false,
+	"editor.semanticHighlighting.enabled": false,
+	"breadcrumbs.enabled": false,
+	"explorer.fileNesting.enabled": true,
+	"terminal.integrated.defaultProfile.linux": "zsh",
+	"explorer.fileNesting.patterns": {
+		".env": ".npm*, tsconfig*, vite*, .git*, svelte*, README*, LICENSE*, *.css, .prettier*, yarn*, package*, bun*",
+		"package.json": ".npm*, tsconfig*, vite*, .git*, svelte*, README*, LICENSE*, *.css, .prettier*, yarn*, package*, astro*",
+		"index.html": ".prettier*, eslint*, LICENSE*, package*, README*"
+	},
+	"window.confirmSaveUntitledWorkspace": false,
+	"[typescript]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "vscode.typescript-language-features"
+	},
+	"files.associations": {
+		"*.tsx": "typescriptreact"
+	},
+	"svelte.enable-ts-plugin": true,
+	"diffEditor.ignoreTrimWhitespace": true,
+	"workbench.iconTheme": "eyecons",
+	"editor.inlineSuggest.suppressSuggestions": true,
+	"workbench.colorTheme": "Gruvbox Dark Hard",
+	"local-sync.backupPath": "/home/lucasmonsan/Documentos/VSCodium",
+	"cody.autocomplete.languages": {
+		"*": true
+	}
+}
