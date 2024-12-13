@@ -1,2 +1,7 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+	import PunchClock from './../components/layout/PunchClock.svelte'
+	import Container from '../components/ui/Container.svelte'
+	import Input from '../components/ui/Input.svelte'
+</script>
+
+<PunchClock />
