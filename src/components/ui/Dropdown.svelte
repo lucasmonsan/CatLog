@@ -22,9 +22,13 @@
 		display: flex;
 		align-items: center;
 		gap: calc(var(--base) * 0.25);
-		width: 100%;
+		min-width: calc(var(--base) * 3.5);
+		width: calc(var(--base) * 3.5);
+		max-width: calc(var(--base) * 3.5);
 		padding: calc(var(--base) * 0.25) 0;
 		opacity: 0.5;
+		font-size: calc(var(--base) * 1);
+		font-family: var(--family-1);
 		color: var(--text-color);
 		background-color: transparent;
 		border: none;

@@ -27,4 +27,8 @@
 		border: none;
 		box-shadow: var(--shadow-1);
 	}
+
+	section {
+		flex-direction: column;
+	}
 </style>
