@@ -1,7 +1,9 @@
 <script lang="ts">
 	import UploadIcon from '$lib/icons/UploadIcon.svelte'
+	import UploadImageIcon from '$lib/icons/UploadImageIcon.svelte'
 
 	export let id: string
+	export let type: 'image' | '' = ''
 	export let onFileSelect: (file: Blob | undefined) => void = () => {}
 
 	const handleChange = (e: Event): void => {
@@ -11,7 +13,11 @@
 </script>
 
 <label for={id}>
-	<UploadIcon />
+	{#if type === 'image'}
+		<UploadImageIcon />
+	{:else}
+		<UploadIcon />
+	{/if}
 	<input type="file" accept="image/*" on:change={handleChange} />
 </label>
 
@@ -22,7 +28,7 @@
 		display: flex;
 		justify-content: center;
 		width: 100%;
-		height: calc(var(--base) * 2.5);
+		height: calc(var(--base) * 2);
 		opacity: 0.5;
 		border-radius: var(--radius-1);
 		transition: opacity var(--fast);
