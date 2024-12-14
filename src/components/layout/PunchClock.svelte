@@ -43,6 +43,7 @@
 				<Input id="Timepicker{index}" type="time" align="center" value={point.time} onInput={(value: string | Blob | undefined) => updatePoint(index, 'time', value)} />
 				<Dropdown value={point.type || ''} options={dropdownOptions} onChange={(value: string) => updatePoint(index, 'type', value as PunchClockPointType)} />
 				<Upload id="Updater{index}" onFileSelect={(file: string | Blob | undefined) => updatePoint(index, 'image', file)} />
+				<button on:click={() => console.log(point.time, '-', point.type)}>Printar</button>
 			</li>
 		{/each}
 	</ul>
