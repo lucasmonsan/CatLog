@@ -5,6 +5,7 @@
 	import type { PunchClockPoint, PunchClockPointType } from '$lib/types/punchClock.d'
 	import Container from '../ui/Container.svelte'
 	import PunchClockIcon from '$lib/icons/PunchClockIcon.svelte'
+	import Button from '../ui/Button.svelte'
 
 	export let points: PunchClockPoint[] = []
 	export let maxPoints: number = 4
@@ -46,8 +47,13 @@
 
 <Container>
 	<div>
-		<PunchClockIcon />
-		<h3>Registro de Ponto</h3>
+		<Button color="transparent">
+			<PunchClockIcon />
+		</Button>
+
+		<Button color="transparent">
+			<h2>Registro de Ponto</h2>
+		</Button>
 	</div>
 
 	<ul>
@@ -65,7 +71,7 @@
 	div {
 		display: flex;
 		align-items: center;
-		gap: var(--gap-2);
+		gap: var(--gap-1);
 		width: 100%;
 		height: calc(var(--base) * 1.5);
 	}

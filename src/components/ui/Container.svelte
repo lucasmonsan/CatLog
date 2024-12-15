@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let type: 'header' | '' = '';
+	export let type: 'header' | '' = ''
 </script>
 
 {#if type === 'header'}
@@ -19,7 +19,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--gap-2);
+		gap: var(--gap-1);
 		width: 100%;
 		padding: calc(var(--base) * 0.75) calc(var(--base) * 1);
 		background-color: var(--border-color);

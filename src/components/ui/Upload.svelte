@@ -30,6 +30,8 @@
 		width: 100%;
 		height: calc(var(--base) * 2);
 		opacity: 0.5;
+		font-weight: 600;
+		font-family: var(--family-1);
 		border-radius: var(--radius-1);
 		transition: opacity var(--fast);
 	}
