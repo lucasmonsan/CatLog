@@ -1,14 +1,14 @@
 <script lang="ts">
+	import ArrowIcon from '$lib/icons/ArrowIcon.svelte'
 	import CalendarIcon from '$lib/icons/CalendarIcon.svelte'
-	import { pickDay, pickMonth, setDate, toDay, pickYear } from '$lib/stores/calendarStore'
+	import { pickDay, pickMonth, setDate, toDay, pickYear, toMonth, toYear } from '$lib/stores/calendarStore'
 	import Button from '../ui/Button.svelte'
 	import Container from '../ui/Container.svelte'
 	import { tick } from 'svelte'
 
 	const weekdays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB']
-	const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
+	const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 
-	let showList = false
 	let showDayList = false
 	let showMonthList = false
 	let showYearList = false
@@ -36,9 +36,11 @@
 			if ($pickDay === value) return 'selected'
 		}
 		if (type === 'month') {
+			if (toMonth === value) return 'today'
 			if ($pickMonth === value) return 'selected'
 		}
 		if (type === 'year') {
+			if (toYear === value) return 'today'
 			if ($pickYear === value) return 'selected'
 		}
 		return ''
@@ -88,17 +90,24 @@
 
 <Container>
 	<div>
-		<CalendarIcon />
+		<Button color="transparent">
+			<CalendarIcon />
+		</Button>
+
 		<Button color="transparent" on:click={() => toggleDayList($pickDay)}>
-			<h3>{String($pickDay).padStart(2, '0')}</h3>
+			<h2>{String($pickDay).padStart(2, '0')}</h2>
 		</Button>
 		-
 		<Button color="transparent" on:click={() => toggleMonthList($pickMonth)}>
-			<h3>{monthNames[$pickMonth - 1]}</h3>
+			<h2>{monthNames[$pickMonth - 1]}</h2>
 		</Button>
 		-
 		<Button color="transparent" on:click={() => toggleYearList($pickYear)}>
-			<h3>{$pickYear}</h3>
+			<h2>{$pickYear}</h2>
+		</Button>
+
+		<Button color="transparent">
+			<ArrowIcon />
 		</Button>
 	</div>
 
@@ -108,7 +117,7 @@
 				<li>
 					<Button color={getButtonClass('day', dayNumber)} on:click={() => toggleDayList(dayNumber)}>
 						<h6>{getWeekday(dayNumber, $pickMonth, $pickYear)}</h6>
-						<h5>{dayNumber}</h5>
+						<h4>{dayNumber}</h4>
 					</Button>
 				</li>
 			{/each}
@@ -120,7 +129,7 @@
 			{#each monthNames as monthName, i}
 				<li>
 					<Button color={getButtonClass('month', i + 1)} on:click={() => toggleMonthList(i + 1)}>
-						<h5>{monthName}</h5>
+						<h4>{monthName}</h4>
 					</Button>
 				</li>
 			{/each}
@@ -132,7 +141,7 @@
 			{#each yearRange as year}
 				<li>
 					<Button color={getButtonClass('year', year)} on:click={() => toggleYearList(year)}>
-						<h5>{year}</h5>
+						<h4>{year}</h4>
 					</Button>
 				</li>
 			{/each}
@@ -144,9 +153,11 @@
 	div {
 		display: flex;
 		align-items: center;
-		gap: var(--gap-2);
+		gap: var(--gap-1);
 		width: 100%;
 		height: calc(var(--base) * 1.5);
+		font-family: var(--family-1);
+		font-weight: bold;
 	}
 
 	ul {
