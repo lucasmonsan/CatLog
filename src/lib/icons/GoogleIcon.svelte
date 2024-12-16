@@ -31,3 +31,10 @@
 		</g>
 	</g>
 </svg>
+
+<style>
+	svg {
+		width: calc(var(--base) * 1.5);
+		height: 100%;
+	}
+</style>

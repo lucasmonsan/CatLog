@@ -1,9 +1,10 @@
 <script lang="ts">
 	import ArrowIcon from '$lib/icons/ArrowIcon.svelte'
 	import CalendarIcon from '$lib/icons/CalendarIcon.svelte'
-	import { pickDay, pickMonth, setDate, toDay, pickYear, toMonth, toYear } from '$lib/stores/calendarStore'
+	import RefreshIcon from '$lib/icons/RefreshIcon.svelte'
 	import Button from '../ui/Button.svelte'
 	import Container from '../ui/Container.svelte'
+	import { pickDay, pickMonth, setDate, toDay, pickYear, toMonth, toYear } from '$lib/stores/calendarStore'
 	import { tick } from 'svelte'
 
 	const weekdays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB']
@@ -86,27 +87,39 @@
 			}
 		}
 	}
+
+	function resetToToday() {
+		toggleDayList($pickDay)
+		toggleMonthList($pickMonth)
+		toggleYearList($pickYear)
+	}
 </script>
 
 <Container>
 	<div>
-		<Button color="transparent">
-			<CalendarIcon />
-		</Button>
+		{#if $pickDay === toDay}
+			<Button classes="transparent icon" on:click={() => toggleDayList($pickDay)}>
+				<CalendarIcon />
+			</Button>
+		{:else}
+			<Button classes="transparent" on:click={() => resetToToday()}>
+				<RefreshIcon />
+			</Button>
+		{/if}
 
-		<Button color="transparent" on:click={() => toggleDayList($pickDay)}>
+		<Button classes="transparent" on:click={() => toggleDayList($pickDay)}>
 			<h2>{String($pickDay).padStart(2, '0')}</h2>
 		</Button>
 		-
-		<Button color="transparent" on:click={() => toggleMonthList($pickMonth)}>
+		<Button classes="transparent" on:click={() => toggleMonthList($pickMonth)}>
 			<h2>{monthNames[$pickMonth - 1]}</h2>
 		</Button>
 		-
-		<Button color="transparent" on:click={() => toggleYearList($pickYear)}>
+		<Button classes="transparent" on:click={() => toggleYearList($pickYear)}>
 			<h2>{$pickYear}</h2>
 		</Button>
 
-		<Button color="transparent">
+		<Button classes="transparent w-100 end ">
 			<ArrowIcon />
 		</Button>
 	</div>
@@ -115,7 +128,7 @@
 		<ul bind:this={daysListDiv}>
 			{#each getDaysInMonth($pickMonth, $pickYear) as dayNumber}
 				<li>
-					<Button color={getButtonClass('day', dayNumber)} on:click={() => toggleDayList(dayNumber)}>
+					<Button classes="{getButtonClass('day', dayNumber)} column" on:click={() => toggleDayList(dayNumber)}>
 						<h6>{getWeekday(dayNumber, $pickMonth, $pickYear)}</h6>
 						<h4>{dayNumber}</h4>
 					</Button>
@@ -128,7 +141,7 @@
 		<ul bind:this={monthsListDiv}>
 			{#each monthNames as monthName, i}
 				<li>
-					<Button color={getButtonClass('month', i + 1)} on:click={() => toggleMonthList(i + 1)}>
+					<Button classes={getButtonClass('month', i + 1)} on:click={() => toggleMonthList(i + 1)}>
 						<h4>{monthName}</h4>
 					</Button>
 				</li>
@@ -140,7 +153,7 @@
 		<ul bind:this={yearsListDiv}>
 			{#each yearRange as year}
 				<li>
-					<Button color={getButtonClass('year', year)} on:click={() => toggleYearList(year)}>
+					<Button classes={getButtonClass('year', year)} on:click={() => toggleYearList(year)}>
 						<h4>{year}</h4>
 					</Button>
 				</li>
