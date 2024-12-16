@@ -6,23 +6,23 @@
 </script>
 
 <Container type="header">
-	<Button color="selected">
+	<Button classes="selected">
 		<h4>Fazer Login</h4>
 	</Button>
 
-	<Button color="selected">
+	<Button classes="selected">
 		<h4>Fazer Cadastro</h4>
 	</Button>
 
-	<Button color="selected">
+	<Button classes="selected">
 		<h4>Esqueci a senha</h4>
 	</Button>
 
-	<Button color="today">
+	<Button classes="today">
 		<GoogleIcon />
 	</Button>
 
-	<Button color="today">
+	<Button classes="today">
 		<AppleIcon />
 	</Button>
 </Container>

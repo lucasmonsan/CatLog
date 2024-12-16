@@ -2,17 +2,21 @@
 	import Input from '../ui/Input.svelte'
 	import Dropdown from '../ui/Dropdown.svelte'
 	import Upload from '../ui/Upload.svelte'
-	import type { PunchClockPoint, PunchClockPointType } from '$lib/types/punchClock.d'
 	import Container from '../ui/Container.svelte'
 	import PunchClockIcon from '$lib/icons/PunchClockIcon.svelte'
 	import Button from '../ui/Button.svelte'
+	import { isValidTime, type PunchClockPoint, type PunchClockPointType } from '$lib/types/punchClock.d'
 
 	export let points: PunchClockPoint[] = []
 	export let maxPoints: number = 4
 	export let onUpdate: (updatedPoints: PunchClockPoint[]) => void = () => {}
 
 	const updatePoint = (index: number, key: keyof PunchClockPoint, value: string | Blob | undefined): void => {
-		points[index] = { ...points[index], [key]: value }
+		if (key === 'time' && typeof value === 'string' && !isValidTime(value)) {
+			alert('Por favor, insira um horário válido no formato HH:mm.')
+			return
+		}
+		points = points.map((p, i) => (i === index ? { ...p, [key]: value } : p))
 		onUpdate([...points])
 	}
 
@@ -47,11 +51,11 @@
 
 <Container>
 	<div>
-		<Button color="transparent">
+		<Button classes="transparent icon">
 			<PunchClockIcon />
 		</Button>
 
-		<Button color="transparent">
+		<Button classes="transparent">
 			<h2>Registro de Ponto</h2>
 		</Button>
 	</div>
