@@ -2,6 +2,7 @@
 	import EmailIcon from '$lib/icons/EmailIcon.svelte'
 	import PasswordIcon from '$lib/icons/PasswordIcon.svelte'
 	import ProfileIcon from '$lib/icons/ProfileIcon.svelte'
+	import { onMount } from 'svelte'
 
 	export let disabled: boolean = false
 	export let id: string
@@ -17,6 +18,11 @@
 		const target = e.target as HTMLInputElement | null
 		if (target) onInput(target.value)
 	}
+
+	onMount(() => {
+		if (type === 'email') document.getElementById(id)?.focus()
+		else if (type === 'time') placeholder = '00:00'
+	})
 </script>
 
 <label for={id} class={value === '' ? '' : 'using'}>

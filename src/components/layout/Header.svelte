@@ -1,28 +1,27 @@
 <script>
 	import AppleIcon from '$lib/icons/AppleIcon.svelte'
 	import GoogleIcon from '$lib/icons/GoogleIcon.svelte'
-	import Button from '../ui/Button.svelte'
 	import Container from '../ui/Container.svelte'
 </script>
 
 <Container type="header">
-	<Button classes="selected">
+	<button class="selected">
 		<h4>Fazer Login</h4>
-	</Button>
+	</button>
 
-	<Button classes="selected">
+	<button class="selected">
 		<h4>Fazer Cadastro</h4>
-	</Button>
+	</button>
 
-	<Button classes="selected">
+	<button class="selected">
 		<h4>Esqueci a senha</h4>
-	</Button>
+	</button>
 
-	<Button classes="today">
+	<button class="today">
 		<GoogleIcon />
-	</Button>
+	</button>
 
-	<Button classes="today">
+	<button class="today">
 		<AppleIcon />
-	</Button>
+	</button>
 </Container>

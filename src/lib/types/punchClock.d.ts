@@ -8,18 +8,17 @@ export enum PunchClockPointType {
 export interface PunchClockPoint {
   time: string; // Formato: HH:mm
   type?: PunchClockPointType; // Tipo de ponto
-  image?: Blob; // Foto ou outro arquivo relacionado ao registro (opcional)
+  image?: Blob | undefined; // Foto ou outro arquivo relacionado ao registro (opcional)
 }
 
 export interface PunchClockProps {
   id?: string; // Identificador único (local ou do AppWrite)
-  year: number; // Ano do registro
-  month: number; // Mês (1 a 12)
-  day: number; // Dia do mês (1 a 31)
-  points: PunchClockPoint[]; // Lista de horários do ponto
-  notes?: string; // Observações opcionais
-  status?: 'pending' | 'approved' | 'rejected'; // Status opcional do registro
-  synced?: boolean; // Indica se o registro foi sincronizado com o AppWrite (vai ser convertido para número ao salvar)
+  year: number;
+  month: number;
+  day: number;
+  points: Point[];
+  notes?: string; // Opcional, mas pode ser definido
+  synced?: boolean; // Obrigatório
 }
 
 export function isValidTime(time: string): boolean {
