@@ -2,7 +2,6 @@
 	import ArrowIcon from '$lib/icons/ArrowIcon.svelte'
 	import CalendarIcon from '$lib/icons/CalendarIcon.svelte'
 	import RefreshIcon from '$lib/icons/RefreshIcon.svelte'
-	import Button from '../ui/Button.svelte'
 	import Container from '../ui/Container.svelte'
 	import { pickDay, pickMonth, setDate, toDay, pickYear, toMonth, toYear } from '$lib/stores/calendarStore'
 	import { tick } from 'svelte'
@@ -10,9 +9,7 @@
 	const weekdays = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SAB']
 	const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
 
-	let showDayList = false
-	let showMonthList = false
-	let showYearList = false
+	let showContent = false
 
 	let daysListDiv: HTMLUListElement | null = null
 	let monthsListDiv: HTMLUListElement | null = null
@@ -47,30 +44,13 @@
 		return ''
 	}
 
-	async function toggleDayList(dayNumber: number) {
-		showDayList = !showDayList
-		setDate($pickYear, $pickMonth, ($pickDay = dayNumber))
-		if (showDayList) {
-			await tick()
-			scrollToItem(daysListDiv, dayNumber - 1)
-		}
-	}
-
-	async function toggleMonthList(monthNumber: number) {
-		showMonthList = !showMonthList
-		setDate($pickYear, ($pickMonth = monthNumber), $pickDay)
-		if (showMonthList) {
-			await tick()
-			scrollToItem(monthsListDiv, monthNumber - 1)
-		}
-	}
-
-	async function toggleYearList(yearNumber: number) {
-		showYearList = !showYearList
-		setDate(($pickYear = yearNumber), $pickMonth, $pickDay)
-		if (showYearList) {
-			await tick()
-			scrollToItem(yearsListDiv, yearNumber - 2000) // Ajusta o índice para o ano
+	async function toggleShowContent() {
+		showContent = !showContent
+		await tick()
+		if (showContent) {
+			scrollToItem(daysListDiv, $pickDay - 1)
+			scrollToItem(monthsListDiv, $pickMonth - 1)
+			scrollToItem(yearsListDiv, $pickYear - 2000)
 		}
 	}
 
@@ -89,73 +69,63 @@
 	}
 
 	function resetToToday() {
-		toggleDayList($pickDay)
-		toggleMonthList($pickMonth)
-		toggleYearList($pickYear)
+		setDate(toYear, toMonth, toDay)
 	}
 </script>
 
 <Container>
 	<div>
 		{#if $pickDay === toDay}
-			<Button classes="transparent icon" on:click={() => toggleDayList($pickDay)}>
+			<button class="transparent icon" on:click={() => toggleShowContent()}>
 				<CalendarIcon />
-			</Button>
+			</button>
 		{:else}
-			<Button classes="transparent" on:click={() => resetToToday()}>
+			<button class="transparent icon" on:click={() => resetToToday()}>
 				<RefreshIcon />
-			</Button>
+			</button>
 		{/if}
 
-		<Button classes="transparent" on:click={() => toggleDayList($pickDay)}>
+		<button class="transparent w-100" on:click={() => toggleShowContent()}>
 			<h2>{String($pickDay).padStart(2, '0')}</h2>
-		</Button>
-		-
-		<Button classes="transparent" on:click={() => toggleMonthList($pickMonth)}>
+			-
 			<h2>{monthNames[$pickMonth - 1]}</h2>
-		</Button>
-		-
-		<Button classes="transparent" on:click={() => toggleYearList($pickYear)}>
+			-
 			<h2>{$pickYear}</h2>
-		</Button>
+		</button>
 
-		<Button classes="transparent w-100 end ">
+		<button class="transparent w-100 end" on:click={() => toggleShowContent()}>
 			<ArrowIcon />
-		</Button>
+		</button>
 	</div>
 
-	{#if showDayList}
+	{#if showContent}
 		<ul bind:this={daysListDiv}>
 			{#each getDaysInMonth($pickMonth, $pickYear) as dayNumber}
 				<li>
-					<Button classes="{getButtonClass('day', dayNumber)} column" on:click={() => toggleDayList(dayNumber)}>
+					<button class="{getButtonClass('day', dayNumber)} column" on:click={() => setDate($pickYear, $pickMonth, ($pickDay = dayNumber))}>
 						<h6>{getWeekday(dayNumber, $pickMonth, $pickYear)}</h6>
 						<h4>{dayNumber}</h4>
-					</Button>
+					</button>
 				</li>
 			{/each}
 		</ul>
-	{/if}
 
-	{#if showMonthList}
 		<ul bind:this={monthsListDiv}>
 			{#each monthNames as monthName, i}
 				<li>
-					<Button classes={getButtonClass('month', i + 1)} on:click={() => toggleMonthList(i + 1)}>
+					<button class={getButtonClass('month', i + 1)} on:click={() => setDate($pickYear, ($pickMonth = i + 1), $pickDay)}>
 						<h4>{monthName}</h4>
-					</Button>
+					</button>
 				</li>
 			{/each}
 		</ul>
-	{/if}
 
-	{#if showYearList}
 		<ul bind:this={yearsListDiv}>
 			{#each yearRange as year}
 				<li>
-					<Button classes={getButtonClass('year', year)} on:click={() => toggleYearList(year)}>
+					<button class={getButtonClass('year', year)} on:click={() => setDate(($pickYear = year), $pickMonth, $pickDay)}>
 						<h4>{year}</h4>
-					</Button>
+					</button>
 				</li>
 			{/each}
 		</ul>
@@ -178,8 +148,8 @@
 		overflow-x: auto;
 		scroll-snap-type: x mandatory;
 		gap: var(--gap-1);
-		padding: var(--gap-2) 0;
 		width: 100%;
+		padding: var(--gap-2) var(--gap-1);
 	}
 
 	li {

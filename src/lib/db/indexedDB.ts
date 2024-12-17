@@ -1,41 +1,49 @@
-import Dexie, { type Table } from 'dexie';
-import type { PunchClockProps } from '$lib/types/punchClock.d';
+import Dexie from 'dexie';
+import type { PunchClockProps } from '$lib/types/punchClock';
 
-export class PunchClockDB extends Dexie {
-  records!: Table<PunchClockProps, string>; // Tabela de registros com o ID como chave primária
+class PunchClockDatabase extends Dexie {
+  punchClock: Dexie.Table<PunchClockProps, string>;
 
   constructor() {
     super('PunchClockDB');
+
     this.version(1).stores({
-      records: 'id, year, month, day, synced',
+      punchClock: '&id, year, month, day, synced', // Índices
     });
+
+    this.punchClock = this.table('punchClock');
   }
 }
 
-export const db = new PunchClockDB();
+export const db = new PunchClockDatabase();
 
-export async function saveRecord(record: PunchClockProps): Promise<void> {
-  // Garante que o registro tenha um ID
-  if (!record.id) {
-    record.id = crypto.randomUUID(); // Gera um UUID para registros novos
-  }
-  await db.records.put(record); // Salva ou atualiza o registro
+/************************************************************************/
+
+// indexedDB.ts
+
+// Salvar um registro (novo ou atualizado)
+export async function savePunchClock(record: PunchClockProps): Promise<void> {
+  if (!record.id) record.id = String(record.year + '-' + record.month + '-' + record.day); // Gera um ID único com base nas datas
+  if (!record.notes) record.notes = ''; // Valor padrão para notes
+  record.synced = false; // Valor padrão para synced
+
+  await db.punchClock.put(record); // Atualiza se o ID já existir, senão insere
 }
 
-export async function getRecordByDate(
-  year: number,
-  month: number,
-  day: number
-): Promise<PunchClockProps | undefined> {
-  return db.records
+// Buscar um registro específico
+export async function getPunchClock(year: number, month: number, day: number): Promise<PunchClockProps | undefined> {
+  return await db.punchClock
     .where({ year, month, day })
-    .first(); // Retorna o primeiro registro correspondente à data
+    .first(); // Retorna o primeiro registro que bate com os critérios
 }
 
-export async function getUnsyncedRecords(): Promise<PunchClockProps[]> {
-  return db.records.where('synced').equals(0).toArray();
-}
-
-export async function deleteRecord(id: string): Promise<void> {
-  await db.records.delete(id);
+// Criar um registro vazio
+export function createEmptyPunchClock(year: number, month: number, day: number): PunchClockProps {
+  return {
+    year,
+    month,
+    day,
+    points: [], // Nenhum ponto registrado
+    synced: false, // Não sincronizado
+  };
 }
