@@ -45,7 +45,7 @@
 		cursor: pointer;
 		display: flex;
 		align-items: center;
-		gap: calc(var(--base) * 0.25);
+		gap: var(--gap-2);
 		width: 100%;
 		padding: calc(var(--base) * 0.25) 0;
 		opacity: 0.5;

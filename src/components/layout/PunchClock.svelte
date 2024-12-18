@@ -4,27 +4,23 @@
 	import Upload from '../ui/Upload.svelte'
 	import Container from '../ui/Container.svelte'
 	import PunchClockIcon from '$lib/icons/PunchClockIcon.svelte'
+	import ArrowIcon from '$lib/icons/ArrowIcon.svelte'
 	import { isValidTime, type PunchClockPoint, type PunchClockPointType } from '$lib/types/punchClock.d'
 	import { onMount } from 'svelte'
 	import { pickDay, pickMonth, pickYear } from '$lib/stores/calendarStore'
 	import { getPunchClock, savePunchClock } from '$lib/db/indexedDB'
-	import ArrowIcon from '$lib/icons/ArrowIcon.svelte'
 
 	let visible = false
 	let showContent = false
-
 	let refreshTrigger = 0
 
-	// Dados do registro de ponto
 	let points: PunchClockPoint[] = []
-	let maxPoints: number = 8
+	let maxPoints: number = 4
 
-	// Atualiza o registro de ponto
+	let isSaveButtonDisabled = true // Variável para habilitar/desabilitar o botão
+
 	const updatePoint = (index: number, key: keyof PunchClockPoint, value: string | Blob | undefined): void => {
-		if (key === 'time' && typeof value === 'string' && !isValidTime(value)) {
-			alert('Por favor, insira um horário válido no formato HH:mm.')
-			return
-		}
+		if (key === 'time' && typeof value === 'string' && !isValidTime(value)) return alert('Por favor, insira um horário válido no formato HH:mm.')
 		points = points.map((p, i) => (i === index ? { ...p, [key]: value } : p))
 	}
 
@@ -35,11 +31,10 @@
 		{ value: 'end', label: 'Fim' }
 	]
 
-	// Carrega o registro de ponto com base na data atual
 	async function loadPunchClock() {
 		try {
 			const existingRecord = await getPunchClock($pickYear, $pickMonth, $pickDay)
-			points = existingRecord?.points || [] // Carrega pontos ou inicia vazio
+			points = existingRecord?.points || []
 		} catch (error) {
 			console.error('Erro ao carregar registro de ponto:', error)
 		}
@@ -49,13 +44,18 @@
 		}
 	}
 
-	// Salva o registro de ponto no IndexedDB
 	async function savePunchClockData() {
 		if (!$pickDay || !$pickMonth || !$pickYear) return alert('Data inválida. Verifique se o dia, mês e ano foram selecionados.')
-		if (points.some((p) => !p.time || !p.type)) return alert('Todos os pontos devem ter horário e tipo preenchidos.')
+
+		const filteredPoints = points.filter((p) => p.time)
 
 		try {
-			await savePunchClock({ year: $pickYear, month: $pickMonth, day: $pickDay, points })
+			await savePunchClock({
+				year: $pickYear,
+				month: $pickMonth,
+				day: $pickDay,
+				points: filteredPoints
+			})
 			alert('Registro salvo com sucesso!')
 		} catch (error) {
 			console.error('Erro ao salvar registro de ponto:', error)
@@ -64,11 +64,13 @@
 	}
 
 	$: {
+		isSaveButtonDisabled = !points.some((p) => isValidTime(p.time || '')) // Atualiza a habilitação do botão de salvar
+
 		if (points.length > 0) {
-			if (!points[0].type) points[0].type = 'start' as PunchClockPointType // Primeiro item é sempre "Início"
-			if (points.length >= maxPoints && !points[maxPoints - 1].type) points[maxPoints - 1].type = 'end' as PunchClockPointType // Último item é sempre "Fim"
+			if (!points[0].type) points[0].type = 'start' as PunchClockPointType
+			if (points.length >= maxPoints && !points[maxPoints - 1].type) points[maxPoints - 1].type = 'end' as PunchClockPointType
 			points.forEach((point, index) => {
-				if (index > 0 && index < maxPoints - 1 && !point.type) point.type = (index % 2 === 0 ? 'return' : 'break') as PunchClockPointType // Itens intermediários alternam entre "Pausa" e "Volta"
+				if (index > 0 && index < maxPoints - 1 && !point.type) point.type = (index % 2 === 0 ? 'return' : 'break') as PunchClockPointType
 			})
 		}
 
@@ -78,7 +80,7 @@
 		}
 	}
 
-	onMount(() => (visible = true)) // Carrega os dados ao montar o componente ou mudar a data
+	onMount(() => (visible = true))
 </script>
 
 {#if visible}
@@ -99,7 +101,7 @@
 					</li>
 				{/each}
 			</ul>
-			<button class="w-100" on:click={savePunchClockData}>
+			<button class="w-100 {isSaveButtonDisabled ? '' : 'success'}" on:click={savePunchClockData} disabled={isSaveButtonDisabled}>
 				<h3>Salvar</h3>
 			</button>
 		{/if}

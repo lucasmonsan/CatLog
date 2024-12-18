@@ -1,13 +1,15 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition'
+
 	export let type: 'header' | '' = ''
 </script>
 
 {#if type === 'header'}
-	<header>
+	<header transition:fade>
 		<slot />
 	</header>
 {:else}
-	<section>
+	<section transition:fade>
 		<slot />
 	</section>
 {/if}
@@ -17,6 +19,7 @@
 	section {
 		overflow: hidden;
 		display: flex;
+		flex-direction: column;
 		align-items: center;
 		justify-content: center;
 		gap: var(--gap-1);
@@ -28,7 +31,7 @@
 		box-shadow: var(--shadow-1);
 	}
 
-	section {
-		flex-direction: column;
+	header {
+		height: calc(var(--base) * 4);
 	}
 </style>
